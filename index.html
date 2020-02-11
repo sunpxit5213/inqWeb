@@ -1,142 +1,74 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>CSS3登录注册切换动画模板 - 站长素材</title>
+    <meta charset="UTF-8">
+    <title>CSS3登录注册切换动画模板 - 站长素材</title>
 
-<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/style.css">
-<script src="js/vuejs-2.5.16.js"></script>
-<script src="js/axios-0.18.0.js"></script>
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/index.js"></script>
-<script src="js/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/vuejs-2.5.16.js"></script>
+    <script src="js/axios-0.18.0.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/jquery.cookie.js"></script>
 
 </head>
 <body>
 
-<div class="materialContainer" id="app">
-	<div class="box">
-		<div class="title">登录</div>
-		<button @click="test1()">查看token</button>
-		<div class="input">
-			<label for="name">用户名</label>
-			<input type="text" name="userName" id="name">
-			<span class="spin"></span>
-		</div>
-		<div class="input">
-			<label for="pass">密码</label>
-			<input type="password" name="password" id="pass">
-			<span class="spin"></span>
-		</div>
-		<div class="button login">
-			<button @click="login()">
-				<span  >登录</span>
-				<i class="fa fa-check"></i>
-			</button>
-		</div>
-		<a href="javascript:" class="pass-forgot">忘记密码？</a>
-	</div>
+<div class="materialContainer" id="app" >
+    <div class="box">
+        <div class="title">登录</div>
+        <button @click="test1()">查看token</button>
+        <div class="input">
+            <label for="name">用户名</label>
+            <input type="text" name="userName" id="name" v-model="user1" v-on:keyup.delete="del" v-on:keyup.enter="login">
+            <span class="spin"></span>
+        </div>
+        <div class="input">
+            <label for="pass">密码</label>
+            <input type="password" name="password" id="pass" v-model="pass1" v-on:keyup.delete="del" v-on:keyup.enter="login">
+            <span class="spin"></span>
+        </div>
+        <div class="button login">
+            <button @click="login()">
+                <span>登录</span>
+                <i class="fa fa-check"></i>
+            </button>
+        </div>
+        <a href="javascript:" class="pass-forgot">忘记密码？</a>
+    </div>
 
-	<div class="overbox" >
-		<div class="material-button alt-2">
-			<span class="shape"></span>
-		</div>
-		<div class="title">注册</div>
-		<div class="input">
-			<label for="regname">用户名</label>
-			<input type="text" name="regname" id="regname">
-			<span class="spin"></span>
-		</div>
-		<div class="input">
-			<label for="regpass">密码</label>
-			<input type="password" name="regpass" id="regpass">
-			<span class="spin"></span>
-		</div>
-		<div class="input">
-			<label for="reregpass">确认密码</label>
-			<input type="password" name="reregpass" id="reregpass">
-			<span class="spin"></span>
-		</div>
-		<div class="button">
-			<button @click="save()">
-				<span>注册</span>
-			</button>
-		</div>
-		
-	</div>
-	
+    <div class="overbox" >
+        <div class="material-button alt-2">
+            <span class="shape"></span>
+        </div>
+        <div class="title">注册</div>
+        <div class="input">
+            <label for="regname">用户名</label>
+            <input type="text" name="regname" id="regname" v-model="user1" v-on:keyup.delete="del"  v-on:keyup.enter="save">
+            <span class="spin"></span>
+        </div>
+        <div class="input">
+            <label for="regpass">密码</label>
+            <input type="password" name="regpass" id="regpass" v-model="pass1" v-on:keyup.delete="del" v-on:keyup.enter="save">
+            <span class="spin"></span>
+        </div>
+        <div class="input">
+            <label for="reregpass">确认密码</label>
+            <input type="password" name="reregpass" id="reregpass" v-model="passt" v-on:keyup.delete="del" v-on:keyup.enter="save">
+            <span class="spin"></span>
+        </div>
+        <div class="button">
+            <button @click="save()">
+                <span>注册</span>
+            </button>
+        </div>
+
+    </div>
+
 
 </div>
 
-
-
-
-
+    <script src="js/vue/login.js"></script>
 </body>
-<script>
-	
-	new Vue({
-		el:"#app",
-		data: {
-          
-        },
-		methods: {
-			
-			test1:function(){
-				console.log($.cookie("token"))
-			},
-			login:function(){
-	            $.ajax({
-					url: "http://127.0.0.1:8567/login/main",
-					data: JSON.stringify({"userName":$("#name").val() ,"password":$("#pass").val()}),
-					type: "post",
-					contentType: 'application/json',
-					dataType: "json",
-					xhrFields: {withCredentials: true},
-    				crossDomain: true,
-					success: function (data) {
-					if(data.code==0){
-//                      	window.location.href="/moban3897/main.html";
-      				
-      					
-                        }
-					}
-				});
-				
-			},
-			save:function(){
-				var a=$("#regname").val();
-				var b=$("#regpass").val();
-				var c=$("#reregpass").val();
-				
-				if(b==c){
-					$.ajax({
-					url: "http://127.0.0.1:8567/login/save",
-					data: JSON.stringify({
-						"userName": a,
-						"password":b,
-						}),
-					type: "post",
-					contentType: 'application/json',
-					dataType: "json",
-					success: function (data) {
-                        if(data.code==0){
-                        	window.location.href="/moban3897/main.html";
-                        }
-					},
-					error:function(){
-						alert("服务器异常")
-					}
-				});
-				}else{
-					alert("密码输入不一致")
-				}
-				
-				
-			}
-			
-		}
-	})
-</script>
 </html>
