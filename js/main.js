@@ -1,0 +1,1 @@
+Vue.http.options.xhr = { withCredentials: true }
